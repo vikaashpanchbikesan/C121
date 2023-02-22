@@ -1,39 +1,38 @@
-noseX = 0;
-noseY = 0;
+var previous_result = '';
 
-function preload(){
-clown_nose = loadImage('https://i.postimg.cc/288wzBSY/Clown.png');
+function setup() {
+  canvas = createCanvas(300, 300);
+  canvas.center();
+  video = createCapture(VIDEO);
+  video.hide();
+  classifier = ml5.imageClassifier('MobileNet', modelLoaded);
 }
 
-function setup(){
-canvas = createCanvas(300,300);
-canvas.center();
-video = createCapture(VIDEO);
-video.size(300,300);
-video.hide();
-poseNet = ml5.poseNet(video,modelLoaded);
-poseNet.on('pose',gotPoses);
+function draw() {
+  image(video, 0, 0, 300, 300);
+  classifier.classify(video, gotResult);
 }
 
-function draw(){
-image(video,0,0,300,300);
-image(clown_nose, noseX, noseY, 30, 30);
+function modelLoaded() {
+  console.log("MobileNet model is loaded");
 }
 
-function take_snapshot(){
-save('myfilterimage.png')
-}
-
-function modelLoaded(){
-    console.log('poseNet is Initialized');
-}
-
-function gotPoses(results){
-if(results.length > 0){
+function gotResult(error, results) {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    if ((results[0].confidence > 0.5) && (previous_result != results[0].label)) {
 console.log(results);
-noseX =results[0].pose.nose.x - 10;
-noseY =results[0].pose.nose.y - 10;
-console.log("note x = " + noseX);
-console.log("note y = " + noseY);
-}
+previous_result = results[0].label;
+var synth = window.speechSynthesis;
+speak_data = "object detected is - "+ results[0].label;
+var utterThis = new SpeechSynthesisUtterance(speak_data);
+synth.speak(utterThis);
+
+document.getElementById("result_object_name").innerHTML = results[0].label;
+document.getElementById("result_object_accuracy").innerHTML = (results[0].confidence * 100).toFixed(3) + " %";
+    }
+  }
+
 }

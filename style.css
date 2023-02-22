@@ -1,18 +1,47 @@
-h3{
-    font-size: 25px !important;
+  .heading
+  {
+    font-size: 23px;
+    width: 100%;
+    margin: 0px;
+    box-shadow:5px 5px 5px grey;
+  }
+  .heading_div
+  {
+    float: none;
+    background: white ; 
+    border-radius: 20px; 
+    color: black;
+    box-shadow:5px 5px 5px grey;
+  }
+  .heading_div2
+  {
+    font-size: 18px ;
+  }
+  .result_para_tag
+  {
+    box-shadow:5px 5px 5px grey;
+    font-size: 20px;
+  }
+
+.result_para_tag span{
+  white-space: pre-line;
 }
 
-.btn-success:hover{
-    background-color: red;
+.copy_right_footer{
+  position:fixed;
+  color:white;
+  background-color: black;
+width: 100%;
+bottom: 0;
+line-height: 3;
+text-align: center;
 }
 
 canvas{
-animation-name: example;
-animation-duration: 4s;
-animation-iteration-count: infinite;
+  border: 5px solid white;
+  border-radius: 20px;
+  box-shadow:5px 5px 5px grey;
+  margin-top: 150px;
 }
-
-@keyframes example{
-from{box-shadow: 1px 1px 38px red;}
-to{box-shadow: 1px 1px 38px yellow;}
-}
+  
+ 
